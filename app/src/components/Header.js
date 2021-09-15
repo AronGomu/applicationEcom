@@ -1,10 +1,19 @@
 import PropTypes from 'prop-types'
+
+// Material Ui Import
+import Toolbar from '@mui/material/Toolbar';
+
+// Custom Classes Import
 import Button from './Button'
 
 const Header = ({ title, onClickFunction }) => {
 
   return (
     <header className='header'>
+      <Toolbar>
+
+      </Toolbar>
+        
       <h1>{title}</h1>
       <Button
         //color='red'
