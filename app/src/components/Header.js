@@ -1,41 +1,63 @@
 import PropTypes from 'prop-types'
 
-// Material Ui Import
-import Toolbar from '@mui/material/Toolbar';
-
 // Custom Classes Import
 import Button from './Button'
 
-const Header = ({ title, onClickFunction }) => {
+const Header = ({ title, materializeIconCode, colorNavbar, connected, loginColorButton, logoutColorButton, loginClickFunction, logoutClickFunction }) => {
+
+  console.log("HEADER")
 
   return (
-    <header className='header'>
-      <Toolbar>
-
-      </Toolbar>
-        
-      <h1>{title}</h1>
-      <Button
-        //color='red'
-        text='Login'
-        onClick={onClickFunction}
-      />
-    </header>
+    <div className='header'>
+      <nav style={{ backgroundColor: colorNavbar }}>
+        <div className="nav-wrapper" style={{ paddingLeft: 20, paddingBottom: 20, paddingRight: 20}}>
+          <div className="brand-logo">
+          <i className="large material-icons">{materializeIconCode}</i>
+            {title}
+          </div>
+          <ul id="nav-mobile" className="right">
+            <li> 
+              <ConnexionButton connected={connected} loginColorButton={loginColorButton} logoutColorButton={logoutColorButton} loginClickFunction={loginClickFunction} logoutClickFunction={logoutClickFunction} />
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
   )
 }
 
+const ConnexionButton = ({connected, loginColorButton, logoutColorButton, loginClickFunction, logoutClickFunction}) => {
+  console.log(loginColorButton);
+
+  if (connected === true) {
+    return <Button text="logout" color={logoutColorButton} onClick={logoutClickFunction}/>
+  }
+  else {
+    return <Button text="login" color={loginColorButton} onClick={loginClickFunction}/>
+  }
+}
+
 Header.defaultProps = {
-  title: 'Task Tracker',
+  title: 'title is Required',
+  materializeIconCode: 'materializeIconCode is required',
+  colorNavbar: '#FDD9DB',
+  connected: false,
+  loginColorButton: "#B4D5C9",
+  logoutColorButton: "#DBB3D2",
+  loginClickFunction: null,
+  logoutClickFunction: null
 }
 
 Header.propTypes = {
   title: PropTypes.string.isRequired,
-}
+  materializeIconCode: PropTypes.string.isRequired,
+  colorNavbar: PropTypes.string,
+  connected: PropTypes.bool.isRequired,
+  loginColorButton: PropTypes.string,
+  logoutColorButton: PropTypes.string,
+  loginClickFunction: PropTypes.func,
+  logoutClickFunction: PropTypes.func
 
-// CSS in JS
-// const headingStyle = {
-//   color: 'red',
-//   backgroundColor: 'black',
-// }
+}
 
 export default Header
