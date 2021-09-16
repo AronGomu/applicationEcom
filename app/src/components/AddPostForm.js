@@ -2,7 +2,7 @@
 
 const AddPostForm = () => {
   return (
-    <div className="AddPostForm">
+    <div className="AddPostForm" style={{paddingLeft: '3%', paddingRight: '3%', borderBottomStyle: 'solid', borderWidth: '1px', borderColor: 'black'}}>
       <form className="col s12">
         <div className="row">
           <div className="input-field col s12">

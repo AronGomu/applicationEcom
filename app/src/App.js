@@ -36,11 +36,11 @@ function App() {
         loginColorButton="#B4D5C9"
         loginClickFunction={loginClick}
         logoutColorButton="#DBB3D2"/>
-      <div className="container">
+      <div className="container" style={{borderLeftStyle: 'solid', borderRightStyle: 'solid', borderWidth: '1px', borderColor: 'black'}}>
         <div className="">
           <AddPostForm />
         </div>
-        <Post title="test"/>
+        <Post title="test" img_url="https://cdnb.artstation.com/p/assets/images/images/040/240/953/4k/lisa-schertler-edit.jpg?1628264052"/>
       </div>
       <LoginPopupPage showLoginPopupPage={showLoginPopupPage}/>
     </div>
