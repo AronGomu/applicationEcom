@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import Header from './components/Header';
 import Login from './components/Login';
 import AddPostForm from './components/AddPostForm'
+import Post from './components/Post'
 
 
 var connected = false;
@@ -39,6 +40,7 @@ function App() {
         <div className="">
           <AddPostForm />
         </div>
+        <Post title="test"/>
       </div>
       <LoginPopupPage showLoginPopupPage={showLoginPopupPage}/>
     </div>

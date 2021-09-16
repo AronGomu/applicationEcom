@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 
 const AddPostForm = () => {
   return (
@@ -24,10 +24,12 @@ const AddPostForm = () => {
   )
 }
 
+/*
 AddPostForm.defaultProps = {
 }
 
 AddPostForm.propTypes = {
 }
+*/
 
 export default AddPostForm
