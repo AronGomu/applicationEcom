@@ -42,7 +42,7 @@ Header.defaultProps = {
   materializeIconCode: 'materializeIconCode is required',
   colorNavbar: '#FDD9DB',
   connected: false,
-  loginColorButton: "#B4D5C9",
+  loginColorButton: "#C1E1C1",
   logoutColorButton: "#DBB3D2",
   loginClickFunction: null,
   logoutClickFunction: null

@@ -3,13 +3,64 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework import status
 from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
+from .models import User
 from .models import Post
+from .serializers import UserSerializer
 from .serializers import PostSerializer
 from django.views.decorators.csrf import csrf_exempt
 
 
+### USER FUNCTION
 
-# Create your views here.
+@csrf_exempt
+@api_view(['GET', 'POST', 'DELETE'])
+def user_list(request):
+
+	if request.method == "GET":
+		users = User.objects.all()
+		serializer = UserSerializer(users, many=True)
+		return JsonResponse(serializer.data, safe = False)
+	
+	elif request.method == "POST":
+		data = JSONParser().parse(request)
+		serializer = UserSerializer(data=data)
+
+		if serializer.is_valid():
+			serializer.save()
+			return JsonResponse(serializer.data, status=status.HTTP_201_CREATED)
+		return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+	
+	elif request.method == "DELETE":
+		count = User.objects.all().delete()
+		return JsonResponse({'message': '{} Posts were deleted successfully!'.format(count[0])}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def user_detail(request, pk):
+    try: 
+        user = User.objects.get(pk=pk) 
+    except User.DoesNotExist: 
+        return JsonResponse({'message': 'The user does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+ 
+    if request.method == 'GET': 
+        user_serializer = UserSerializer(user) 
+        return JsonResponse(user_serializer.data) 
+ 
+    elif request.method == 'PUT': 
+        user_data = JSONParser().parse(request) 
+        user_serializer = UserSerializer(user, data=user_data) 
+        if user_serializer.is_valid(): 
+            user_serializer.save() 
+            return JsonResponse(user_serializer.data) 
+        return JsonResponse(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+ 
+    elif request.method == 'DELETE': 
+        user.delete() 
+        return JsonResponse({'message': 'Post was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+
+
+### POST FUNCTION
+
 @csrf_exempt
 @api_view(['GET', 'POST', 'DELETE'])
 def post_list(request):
@@ -55,13 +106,3 @@ def post_detail(request, pk):
     elif request.method == 'DELETE': 
         post.delete() 
         return JsonResponse({'message': 'Post was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
-    
-"""
-@api_view(['GET'])
-def post_list_published(request):
-    posts = Post.objects.filter(published=True)
-        
-    if request.method == 'GET': 
-        posts_serializer = PostSerializer(posts, many=True)
-        return JsonResponse(posts_serializer.data, safe=False)
-"""

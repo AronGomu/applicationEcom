@@ -1,39 +1,27 @@
 //import PropTypes from 'prop-types'
 
-import "./Login.css"
-
-const Login = ({loginFunction}) => {
-
+const Login = ({swapToSignupPopup, loginFunction}) => {
 
   return (
-    <div className='login'>
-			<div id="login" className="modal">
-				<h5 className="modal-close">&#10005;</h5>
-				<div className="modal-content center">
-					<h4>Login Form</h4>
+		<div className="login center">
+			<h4>Login</h4>
 
-					<form onSubmit={loginFunction}>
+			<form onSubmit={loginFunction} style={{paddingLeft: 50, paddingRight: 50, paddingBottom: 10}}>
 
-						<div className="input-field">
-							<i className="material-icons prefix">person</i>
-							<input type="text" id="name"/>
-							<label>Username</label>
-						</div>
-						<br/>
-
-						<div className="input-field">
-							<i className="material-icons prefix">lock</i>
-							<input type="password" id="pass"/>
-							<label>Password</label>
-						</div>
-						<br/>
-
-						<input type="submit" value="Login" className="btn btn-large"/>
-						
-					</form>
+				<div className="input-field" style={{paddingBottom: 10}}>
+					<input type="text" id="name"/>
+					<label>Username</label>
 				</div>
-			</div>
-    </div>
+
+				<div className="input-field" style={{paddingBottom: 10}}>
+					<input type="password" id="pass"/>
+					<label>Password</label>
+				</div>
+
+				<input type="submit" value="Login" className="btn btn-large" style={{color: "#C1E1C1"}}/>
+			</form>
+			<button style={{background: 'none', color: 'blue', border: 'none', cursor: 'pointer'}} onClick={swapToSignupPopup}>New ? Create new account</button>
+		</div>
   )
 }
 
