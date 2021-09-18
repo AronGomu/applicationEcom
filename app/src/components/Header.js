@@ -3,9 +3,7 @@ import PropTypes from 'prop-types'
 // Custom Classes Import
 import Button from './Button'
 
-const Header = ({ title, materializeIconCode, colorNavbar, connected, loginColorButton, logoutColorButton, loginClickFunction, logoutClickFunction }) => {
-
-  console.log("HEADER")
+const Header = ({ username, title, materializeIconCode, colorNavbar, loginColorButton, logoutColorButton, loginClickFunction, logoutClickFunction }) => {
 
   return (
     <div className='header'>
@@ -16,8 +14,11 @@ const Header = ({ title, materializeIconCode, colorNavbar, connected, loginColor
             {title}
           </div>
           <ul id="nav-mobile" className="right">
+            <li style={{paddingRight: 10}}>
+              <h5>{username}</h5>
+            </li>
             <li> 
-              <ConnexionButton connected={connected} loginColorButton={loginColorButton} logoutColorButton={logoutColorButton} loginClickFunction={loginClickFunction} logoutClickFunction={logoutClickFunction} />
+              <ConnexionButton username={username} loginColorButton={loginColorButton} logoutColorButton={logoutColorButton} loginClickFunction={loginClickFunction} logoutClickFunction={logoutClickFunction} />
             </li>
           </ul>
         </div>
@@ -26,29 +27,30 @@ const Header = ({ title, materializeIconCode, colorNavbar, connected, loginColor
   )
 }
 
-const ConnexionButton = ({connected, loginColorButton, logoutColorButton, loginClickFunction, logoutClickFunction}) => {
-  console.log(loginColorButton);
+const ConnexionButton = ({username, loginColorButton, logoutColorButton, loginClickFunction, logoutClickFunction}) => {
 
-  if (connected === true) {
-    return <Button text="logout" color={logoutColorButton} onClick={logoutClickFunction}/>
+  if (username === null) {
+    return <Button text="login" color={loginColorButton} onClick={loginClickFunction}/>
   }
   else {
-    return <Button text="login" color={loginColorButton} onClick={loginClickFunction}/>
+    return <Button text="logout" color={logoutColorButton} onClick={logoutClickFunction}/>
   }
 }
 
 Header.defaultProps = {
+  username: 'test username',
   title: 'title is Required',
   materializeIconCode: 'materializeIconCode is required',
   colorNavbar: '#FDD9DB',
   connected: false,
-  loginColorButton: "#B4D5C9",
+  loginColorButton: "#C1E1C1",
   logoutColorButton: "#DBB3D2",
   loginClickFunction: null,
   logoutClickFunction: null
 }
 
 Header.propTypes = {
+  username: PropTypes.string,
   title: PropTypes.string.isRequired,
   materializeIconCode: PropTypes.string.isRequired,
   colorNavbar: PropTypes.string,
