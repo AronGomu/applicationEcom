@@ -7,7 +7,7 @@ const Login = ({signupFunction}) => {
 	const [password, setPassword] = useState(null);
 
 	function onSubmitFunction() {
-		console.log(username, password)
+		console.log(username + " " + password)
 		signupFunction(username, password);
 	}
 

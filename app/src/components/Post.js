@@ -1,11 +1,16 @@
 import PropTypes from 'prop-types'
 
-const Post = ({title, img_url}) => {
+const Post = ({title, author, imageLink}) => {
   return (
     <div className="Post">
       <h3 style={{padding: '3%', paddingBottom: '0%'}}>{title}</h3>
-      <img src={img_url} alt="post_img"
-        style={{maxWidth: '100%', maxHeigh: 600, padding: '3%', paddingTop: '0%'}}/>
+      <div style={{padding: '3%', paddingTop: '0%'}}>
+        <img src={imageLink} alt="No Image..."
+          style={{maxWidth: '100%', maxHeigh: 600}}
+        />
+        <p style={{float: 'right'}}>{author}</p>
+      </div>
+      
     </div>
   )
 }
