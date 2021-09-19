@@ -13,7 +13,7 @@ const Login = ({swapToSignupPopup, loginFunction}) => {
 
   return (
 		<div className="login center">
-			<h4>Login</h4>
+			<h4>Login to your Account</h4>
 
 			<div style={{paddingLeft: 50, paddingRight: 50, paddingBottom: 10}}>
 
@@ -27,7 +27,7 @@ const Login = ({swapToSignupPopup, loginFunction}) => {
 					<label>Password</label>
 				</div>
 
-				<input type="submit" value="Login" className="btn btn-large" style={{color: "#C1E1C1"}} onClick={onSubmitFunction}/>
+				<input type="submit" value="Let's Log" className="btn btn-large" style={{color: "#C1E1C1"}} onClick={onSubmitFunction}/>
 			</div>
 			<button style={{background: 'none', color: 'blue', border: 'none', cursor: 'pointer'}} onClick={swapToSignupPopup}>New ? Create new account</button>
 		</div>

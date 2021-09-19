@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {useState} from 'react'
 
 // Custom Components
-import Header from './components/Header';
+import Header from './components/Header/Header';
 import PopupForm from './components/PopupForm';
 import AddPostForm from './components/AddPostForm'
 import Post from './components/Post'
@@ -75,6 +75,7 @@ function App() {
       (result) => {
         console.log("IMG POSTED")
         console.log(result)
+        setPosts(posts.push(data))
       },
       // Note: it's important to handle errors here instead of a catch() block so that we don't swallow exceptions from actual bugs in components.
       (error) => {

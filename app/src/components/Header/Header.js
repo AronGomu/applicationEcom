@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 
 // Custom Classes Import
-import Button from './Button'
+import Button from '../Button'
 
 const Header = ({ username, title, materializeIconCode, colorNavbar, loginColorButton, logoutColorButton, loginClickFunction, logoutClickFunction }) => {
 

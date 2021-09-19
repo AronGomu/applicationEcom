@@ -1,7 +1,7 @@
 //import PropTypes from 'prop-types'
 import { useState } from "react"
 
-const Login = ({signupFunction}) => {
+const Signup = ({signupFunction}) => {
 
 	const [username, setUsername] = useState(null);
 	const [password, setPassword] = useState(null);
@@ -27,7 +27,7 @@ const Login = ({signupFunction}) => {
 					<label>Password</label>
 				</div>
 
-				<input type="submit" value="Signup" className="btn btn-large" onClick={onSubmitFunction}/>
+				<input type="submit" value="Create Account" className="btn btn-large" onClick={onSubmitFunction}/>
 			</div>
 		</div>
   )
@@ -41,4 +41,4 @@ Login.propTypes = {
 }
 */
 
-export default Login
+export default Signup
