@@ -7,20 +7,96 @@ import Header from './components/Header/Header';
 import PopupForm from './components/PopupForm';
 import AddPostForm from './components/AddPostForm'
 import Post from './components/Post'
-
-
-var postAreLoaded = false;
+import { httpRequest } from './HttpRequest';
 
 function App() {
   const [showLoginPage, setShowLoginPage] = useState(false);
   const [useBlur, setUseBlur] = useState("blur(0px)");
   const [username, setUsername] = useState(null);
   const [posts, setPosts] = useState([]);
+  const [postAreLoaded, setPostAreLoaded] = useState(false);
 
+
+  // HTTP REQUESTS
+  function loadPost() {
+    return httpRequest('GET', "http://127.0.0.1:8000/api/post")
+    .then(
+      (result) => {
+        return result;
+      },
+      (error) => {
+        console.log("ERROR");
+        console.log(error);
+      }
+    )
+  }
+
+  function signup(username, password) {
+    const data = {username: username, password: password}
+    httpRequest('POST', "http://127.0.0.1:8000/api/user", data)
+    .then(
+      () => {
+        setUsername(data.username);
+        hidePopupPageFunction();
+      },
+      (error) => {
+        console.log("ERROR");
+        console.log(error);
+      }
+    )
+  }
+
+  function login(username, password) {
+    const data = {username: username, password: password}
+    httpRequest('POST', "http://127.0.0.1:8000/api/login", data)
+    .then(
+      (result) => {
+        if (result.message !== "The user does not exist") {
+          setUsername(data.username);
+          hidePopupPageFunction();
+        }
+      },
+      (error) => {
+        console.log("ERROR");
+        console.log(error);
+      }
+    )
+  }
+
+
+  function addPost(title, author, imagelink) {
+    const data = {title: title, author: author, imagelink: imagelink}
+    httpRequest('POST', "http://127.0.0.1:8000/api/post", data)
+    .then(
+      (result) => {
+        setPosts(posts.push(data))
+      },
+      (error) => {
+        console.log("ERROR");
+        console.log(error);
+      }
+    )
+  }
+
+  function deletePost(id) {
+    httpRequest('DELETE', "http://127.0.0.1:8000/api/post/" + id, null)
+    .then(
+      () => {
+        setPostAreLoaded(false);
+      },
+      // Note: it's important to handle errors here instead of a catch() block so that we don't swallow exceptions from actual bugs in components.
+      (error) => {
+        console.log("ERROR");
+        console.log(error);
+      }
+    )
+  }
+
+  // Trigger the HttpRequest to load the post
   if (postAreLoaded === false) {
     loadPost().then((result) => {
       setPosts(result);
-      postAreLoaded = true;
+      setPostAreLoaded(true);
     })
   }
 
@@ -34,62 +110,12 @@ function App() {
     setUseBlur("blur(0px)");
   }
 
-  function signup(username, password) {
-    const data = {username: username, password: password}
-    httpRquest('POST', "http://127.0.0.1:8000/api/user", data)
-    .then(
-      () => {
-        setUsername(data.username);
-        hidePopupPageFunction();
-      },
-      // Note: it's important to handle errors here instead of a catch() block so that we don't swallow exceptions from actual bugs in components.
-      (error) => {
-        console.log("ERROR");
-        console.log(error);
-      }
-    )
-  }
-
-  function login(username, password) {
-    const data = {username: username, password: password}
-    httpRquest('POST', "http://127.0.0.1:8000/api/login", data)
-    .then(
-      (result) => {
-        if (result.message !== "The user does not exist") {
-          setUsername(data.username);
-          hidePopupPageFunction();
-        }
-      },
-      // Note: it's important to handle errors here instead of a catch() block so that we don't swallow exceptions from actual bugs in components.
-      (error) => {
-        console.log("ERROR");
-        console.log(error);
-      }
-    )
-  }
-
-  function addPost(title, author, imagelink) {
-    const data = {title: title, author: author, imagelink: imagelink}
-    httpRquest('POST', "http://127.0.0.1:8000/api/post", data)
-    .then(
-      (result) => {
-        console.log("IMG POSTED")
-        console.log(result)
-        setPosts(posts.push(data))
-      },
-      // Note: it's important to handle errors here instead of a catch() block so that we don't swallow exceptions from actual bugs in components.
-      (error) => {
-        console.log("ERROR");
-        console.log(error);
-      }
-    )
-  }
-
 
   function logout() {
     setUsername(null);
   }
-  
+
+  console.log(posts)
 
   document.body.style.backgroundColor = App.defaultProps.bodyBackgroundColor;
 
@@ -109,7 +135,7 @@ function App() {
           />
         <div className="container" style={{borderLeftStyle: 'solid', borderRightStyle: 'solid', borderWidth: '1px', borderColor: 'black', filter: useBlur}}>
         {posts.map(function(post, i){
-          return <Post title={post.title} author={post.author} imageLink={post.imagelink}/>;
+          return <Post id={post.id} username={username} title={post.title} author={post.author} imageLink={post.imagelink} deletePostFunction={deletePost}/>;
         })}
         </div>
         <PopupForm show={showLoginPage} hidePopupPageFunction={hidePopupPageFunction} signupFunction={signup} loginFunction={login}/>
@@ -136,7 +162,7 @@ function App() {
           <AddPostForm username={username} addPost={addPost} />
         </div>
         {posts.map(function(post, i){
-          return <Post title={post.title} author={post.author} imageLink={post.imagelink}/>;
+          return <Post id={post.id} username={username} title={post.title} author={post.author} imageLink={post.imagelink} deletePostFunction={deletePost}/>;
         })}
       </div>
       <PopupForm show={showLoginPage} hidePopupPageFunction={hidePopupPageFunction} signupFunction={signup} loginFunction={login}/>
@@ -146,7 +172,8 @@ function App() {
 
 
 App.defaultProps = {
-  bodyBackgroundColor: '#D3D3D3',
+  bodyBackgroundColor: '#121212',
+  //bodyBackgroundColor: '#D3D3D3',
 }
 
 
@@ -159,48 +186,3 @@ App.propTypes = {
 
 
 export default App;
-
-
-
-// Example POST method implementation:
-async function httpRquest(method, url = '', data = null) {
-
-  let request = {
-    method: method, // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json'
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  }
-
-  if (data != null) {
-    request['body'] = JSON.stringify(data) // body data type must match "Content-Type" header
-  }
-
-
-  // Default options are marked with *
-  const response = await fetch(url, request);
-  return response.json(); // parses JSON response into native JavaScript objects
-}
-
-
-function loadPost() {
-  return httpRquest('GET', "http://127.0.0.1:8000/api/post")
-  .then(
-    (result) => {
-      return result;
-    },
-    // Note: it's important to handle errors here instead of a catch() block so that we don't swallow exceptions from actual bugs in components.
-    (error) => {
-      console.log("ERROR");
-      console.log(error);
-    }
-  )
-
-
-}

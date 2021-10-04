@@ -46,6 +46,7 @@ L'utilisateur arrive sur le site. Clique sur le bouton login, remplie ses identi
 L'utilisateur clique sur login, puis l'hyperlien "create new account" qui va modifier le formulaire du popup, remplie les champs username et password puis clique sur le bouton "create". Il revient sur la page principale connecté avec un popup qui l'avertie que son compte a été créé.
 
 
+
 ## Versionning
 
 Github sera utilisé pour héberger le code source du site et gérer le versionning.

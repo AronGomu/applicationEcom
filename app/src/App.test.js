@@ -120,8 +120,9 @@ it('Create new account, logout then login with it', () => {
   createAccountButtonElement.click()
 
   // Check that the popup closed
-  const loginPopupPageTitleElement2 = screen.queryByText(/Sign Up/i);
-  expect(loginPopupPageTitleElement2).not.toBeInTheDocument();
+  const signupPopupPageTitleElement2 = screen.queryByText(/Sign Up/i);
+  console.log(signupPopupPageTitleElement2);
+  expect(signupPopupPageTitleElement2).not.toBeInTheDocument();
 
   const exitButtonElement2 = screen.queryByText(/✕/i);
   expect(exitButtonElement2).not.toBeInTheDocument();
