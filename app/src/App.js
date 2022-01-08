@@ -173,8 +173,8 @@ function App() {
 
 
 App.defaultProps = {
-  bodyBackgroundColor: '#121212',
-  //bodyBackgroundColor: '#D3D3D3',
+  //bodyBackgroundColor: '#121212', // Darkmode
+  bodyBackgroundColor: '#D3D3D3',
 }
 
 
