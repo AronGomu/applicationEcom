@@ -1,6 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
+
+jest.setTimeout(30000);
 
 it('All Header elements appears', () => {
   render(<App />);
@@ -100,15 +102,44 @@ it('Signup page appear when clicking new account text', () => {
 });
 
 
-it('Create new account, logout then login with it', () => {
+test('Create new account, logout then login with it', async () => {
   render(<App />);
-  const loginButtonElement = screen.getByText(/login/i);
 
+  // Check that the popup is not here
+
+  const signupPopupPageTitleElement0 = screen.queryByText(/Sign Up/i);
+  expect(signupPopupPageTitleElement0).not.toBeInTheDocument();
+
+  const exitButtonElement0 = screen.queryByText(/✕/i);
+  expect(exitButtonElement0).not.toBeInTheDocument();
+
+  // click on login button
+
+  const loginButtonElement = screen.getByText(/login/i);
   loginButtonElement.click()
 
-  const signupTextElement = screen.getByText(/New \? Create new account/i);
+  //check that signup page doesn't show and that the cross show to allow exit
 
+  const signupPopupPageTitleElement1 = screen.queryByText(/Sign Up/i);
+  expect(signupPopupPageTitleElement1).not.toBeInTheDocument();
+
+  const exitButtonElement1 = screen.queryByText(/✕/i);
+  expect(exitButtonElement1).toBeInTheDocument();
+
+  // click on create new account
+
+  const signupTextElement = screen.getByText(/New \? Create new account/i);
   signupTextElement.click()
+
+  // Check title and cross
+
+  const signupPopupPageTitleElement2 = screen.queryByText(/Sign Up/i);
+  expect(signupPopupPageTitleElement2).toBeInTheDocument();
+
+  const exitButtonElement2 = screen.queryByText(/✕/i);
+  expect(exitButtonElement2).toBeInTheDocument();
+
+  // fill form
 
   const usernameInputElement = screen.getByText(/username/i);
   userEvent.type(usernameInputElement, "test");
@@ -116,16 +147,19 @@ it('Create new account, logout then login with it', () => {
   const passwordInputElement = screen.getByText(/password/i);
   userEvent.type(passwordInputElement, "test");
 
+  // Click on creating account button
+
   const createAccountButtonElement = screen.getByText(/create account/i);
   createAccountButtonElement.click()
+  
+  await act(new Promise((r) => setTimeout(r, 5000)));
 
-  // Check that the popup closed
-  const signupPopupPageTitleElement2 = screen.queryByText(/Sign Up/i);
-  console.log(signupPopupPageTitleElement2);
-  expect(signupPopupPageTitleElement2).not.toBeInTheDocument();
+  // Check that all element of popup are closed
+  const signupPopupPageTitleElement3 = screen.queryByText(/Sign Up/i);
+  expect(signupPopupPageTitleElement3).not.toBeInTheDocument();
 
-  const exitButtonElement2 = screen.queryByText(/✕/i);
-  expect(exitButtonElement2).not.toBeInTheDocument();
+  const exitButtonElement3 = screen.queryByText(/✕/i);
+  expect(exitButtonElement3).not.toBeInTheDocument();
 
   const usernameInputElement2 = screen.queryByText(/username/i);
   expect(usernameInputElement2).not.toBeInTheDocument();
@@ -138,15 +172,19 @@ it('Create new account, logout then login with it', () => {
 
 
   // Check that the username appear in the header meaning the connexion is successful
-  const usernameElement = screen.getByText(/test/i);
+  console.log('\n\n\n\n\n');
+  console.log(screen.findAllByText('t'));
+  console.log('\n\n\n\n\n');
+  const usernameElement = screen.queryByText(/test/i);
   expect(usernameElement).toBeInTheDocument();
 
   // Logout
-  const logoutButton = screen.getByText(/logout/i);
+  const logoutButton = screen.queryByText(/logout/i);
   logoutButton.click()
 
   // Check again the username
-  const usernameElement2 = screen.getByText(/test/i);
+  const usernameElement2 = screen.queryByText(/test/i);
   expect(usernameElement2).not.toBeInTheDocument();
 
 });
+

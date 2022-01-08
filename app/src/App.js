@@ -32,7 +32,8 @@ function App() {
   }
 
   function signup(username, password) {
-    const data = {username: username, password: password}
+    
+    const data = {username: username, password: password};
     httpRequest('POST', "http://127.0.0.1:8000/api/user", data)
     .then(
       () => {

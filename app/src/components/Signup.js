@@ -1,14 +1,16 @@
 //import PropTypes from 'prop-types'
 import { useState } from "react"
 
-const Signup = ({signupFunction}) => {
+const Signup = ({signupFunction, swapToLoginPopup}) => {
 
 	const [username, setUsername] = useState(null);
 	const [password, setPassword] = useState(null);
 
 	function onSubmitFunction() {
 		console.log(username + " " + password)
+		swapToLoginPopup();
 		signupFunction(username, password);
+		
 	}
 
   return (

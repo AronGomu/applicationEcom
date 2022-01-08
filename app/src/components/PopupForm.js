@@ -7,11 +7,22 @@ import Signup from './Signup'
 
 const PopupForm = ({show, hidePopupPageFunction, loginFunction, signupFunction}) => {
 
-	const [popup, setPopup] = useState("login");
+	const [popup, setPopup] = useState('login');
 
 	function swapToSignupPopup() {
 		setPopup("signup");
 	}
+
+	function swapToLoginPopup() {
+		setPopup("login");
+	}
+
+	function hidePopupPageFunctionOnClick() {
+		swapToLoginPopup();
+		hidePopupPageFunction();
+	}
+		
+	
 
 	if (show === false) return null;
 
@@ -21,7 +32,7 @@ const PopupForm = ({show, hidePopupPageFunction, loginFunction, signupFunction})
 				<div style={{backgroundColor: 'white', position: 'relative', left: '-50%'}}>
 					<button 
 							style={{background: 'none', color: 'inherit', border: 'none', cursor: 'pointer', float: 'right', paddingLeft: 20, paddingRight: 20}}
-							onClick={hidePopupPageFunction}>
+							onClick={hidePopupPageFunctionOnClick}>
 						<h5 >&#10005;</h5>
 					</button>
 	
@@ -38,11 +49,11 @@ const PopupForm = ({show, hidePopupPageFunction, loginFunction, signupFunction})
 				<div style={{backgroundColor: 'white', position: 'relative', left: '-50%'}}>
 					<button 
 							style={{background: 'none', color: 'inherit', border: 'none', cursor: 'pointer', float: 'right', paddingLeft: 20, paddingRight: 20}}
-							onClick={hidePopupPageFunction}>
+							onClick={hidePopupPageFunctionOnClick}>
 						<h5 >&#10005;</h5>
 					</button>
 	
-					<Signup signupFunction={signupFunction} />
+					<Signup swapToLoginPopup={swapToLoginPopup} signupFunction={signupFunction} />
 					
 				</div>
 			</div>
