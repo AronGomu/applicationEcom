@@ -9,4 +9,24 @@ Si les packages node ne sont pas déjà présent, allez dans app/ et installer l
 
 Pour lancer l'application react, allez dans le dossier app et executez : npm start
 
-Pour lancer l'api django, allez dans django_rest_api et executez : py manage.py runserver
+Pour les tests : npm test
+
+
+Pour lancer l'api django, allez dans django_rest_api/ puis api/ et executez : py manage.py runserver
+
+Pour les tests : py tests.py
+
+
+## architecture
+
+### dossier mockup
+
+Contient les maquettes des différentes pages
+
+### app
+
+Contient le frontend en react de l'application.
+
+### django_rest_api
+
+Contient le backend en django
