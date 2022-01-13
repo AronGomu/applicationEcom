@@ -22,7 +22,13 @@ def user_list(request):
 		return JsonResponse(serializer.data, safe = False)
 	
 	elif request.method == "POST":
+        
 		data = JSONParser().parse(request)
+		try: 
+			user = User.objects.get(username=data['username'])
+			return JsonResponse({'message': 'The user already exist'}, status=status.HTTP_400_BAD_REQUEST)
+		except User.DoesNotExist: 
+			pass
 		serializer = UserSerializer(data=data)
 
 		if serializer.is_valid():
@@ -126,3 +132,19 @@ def post_detail(request, pk):
     elif request.method == 'DELETE': 
         post.delete() 
         return JsonResponse({'message': 'Post was deleted successfully!'}, status=status.HTTP_204_NO_CONTENT)
+
+
+@csrf_exempt
+@api_view(['GET'])
+def userpost_list(request, username):
+    try:
+        user = User.objects.get(username=username) 
+    except User.DoesNotExist: 
+        return JsonResponse({'message': 'The user does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+
+    if request.method == "GET":
+        posts = Post.objects.all().filter(author=user.username)
+        serializer = PostSerializer(posts, many=True)
+        return JsonResponse(serializer.data, safe = False)
+
+    

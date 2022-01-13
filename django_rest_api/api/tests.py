@@ -38,17 +38,33 @@ class UserTestCase(TestCase):
         r = c.post('/api/login', {"username": "test02", "password": "456"}, content_type="application/json")
         self.assertEqual(r.status_code, 200)
 
+    
     def test_sign_up_same_user(self):
         c = Client()
         r = c.post('/api/user', {"username": "test01", "password": "456"}, content_type="application/json")
-        self.assertEqual(r.status_code, 404)
+        self.assertEqual(r.status_code, 400)
+    
 
 
 class PostTestCase(TestCase):
     def setUp(self):
-        Post.objects.create(title="the title", author="test author", imagelink="https://images3.alphacoders.com/152/thumb-1920-152779.jpg")
+
+        User.objects.create(username="author", password="aaa")
+        User.objects.create(username="author2", password="aaa")
+        User.objects.create(username="author3", password="aaa")
+
+        Post.objects.create(title="the title", author="author", imagelink="1")
+        Post.objects.create(title="the title 2", author="author2", imagelink="2")
+        Post.objects.create(title="the title 3", author="author3", imagelink="3")
 
     def test_get_posts(self):
         c = Client()
         r = c.get('/api/post')
         self.assertEqual(r.status_code, 200)
+
+    def test_get_all_post_from_user(self):
+        c = Client()
+        r = c.get('/api/userpost/author')
+        self.assertEqual(r.status_code, 200)
+
+    
