@@ -1,11 +1,16 @@
-import { render, screen, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import App from './components/Feed';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+
+import Feed from './components/Feed';
 
 jest.setTimeout(30000);
 
 it('All Header elements appears', () => {
-  render(<App />);
+  render(
+    <MemoryRouter>
+      <Feed />
+    </MemoryRouter>
+  );
   const logoElement = screen.getByText(/image/i);
   expect(logoElement).toBeInTheDocument();
 
@@ -17,7 +22,11 @@ it('All Header elements appears', () => {
 });
 
 it('All popup page elements appear when clicking on login button', () => {
-  render(<App />);
+  render(
+    <MemoryRouter>
+      <Feed />
+    </MemoryRouter>
+  );
 
   const loginButtonElement = screen.getByText(/login/i);
 
@@ -44,7 +53,11 @@ it('All popup page elements appear when clicking on login button', () => {
 
 
 it('Popup page disappear when clicking on exit', () => {
-  render(<App />);
+  render(
+    <MemoryRouter>
+      <Feed />
+    </MemoryRouter>
+  );
   const loginButtonElement = screen.getByText(/login/i);
 
   loginButtonElement.click()
@@ -75,7 +88,12 @@ it('Popup page disappear when clicking on exit', () => {
 
 
 it('Signup page appear when clicking new account text', () => {
-  render(<App />);
+  render(
+    <MemoryRouter>
+      <Feed />
+    </MemoryRouter>
+  );
+  
   const loginButtonElement = screen.getByText(/login/i);
 
   loginButtonElement.click()
@@ -101,6 +119,7 @@ it('Signup page appear when clicking new account text', () => {
 
 });
 
+/* Les test lié à l'api sont dans la partie django
 
 test('Create new account, logout then login with it', async () => {
   render(<App />);
@@ -187,4 +206,4 @@ test('Create new account, logout then login with it', async () => {
   expect(usernameElement2).not.toBeInTheDocument();
 
 });
-
+*/

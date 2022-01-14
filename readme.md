@@ -27,6 +27,14 @@ Contient les maquettes des différentes pages
 
 Contient le frontend en react de l'application.
 
+Aussi, selon le système d'exploitation, il faut modifier dans package.json pour la commande start avec celles indiqué ci-dessous
+
+## start command
+    "start": "react-scripts start",
+
+## start command on linux
+    "start": "react-scripts --openssl-legacy-provider start",
+
 ### django_rest_api
 
 Contient le backend en django

@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 function Feed() {
   const [showLoginPage, setShowLoginPage] = useState(false);
   const [useBlur, setUseBlur] = useState("blur(0px)");
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState(globalData.username);
   const [posts, setPosts] = useState([]);
   const [postAreLoaded, setPostAreLoaded] = useState(false);
 
@@ -109,9 +109,8 @@ function Feed() {
   function logout() {
     globalData.username = null;
     setUsername(null);
+    console.log("LOGOUT");
   }
-
-  console.log(posts)
 
   document.body.style.backgroundColor = Feed.defaultProps.bodyBackgroundColor;
 

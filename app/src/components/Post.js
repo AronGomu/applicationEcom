@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import { httpRequest } from '../services/HttpRequest';
 import globalData from '../services/globalData';
@@ -17,7 +17,7 @@ const Post = (props) => {
 
   const [showLoginPage, setShowLoginPage] = useState(false);
   const [useBlur, setUseBlur] = useState("blur(0px)");
-  const [username, setUsername] = useState(null);
+  const [username, setUsername] = useState(globalData.username);
   const [post, setPost] = useState(null);
 
   // HTTP REQUESTS
@@ -38,7 +38,8 @@ const Post = (props) => {
     httpRequest('DELETE', `http://127.0.0.1:8000/api/post/${id}`, null)
     .then(
       () => {
-        window.location.href = '/'; //one level up
+        console.log('HELLO');
+        window.location.href = '/';
       },
       // Note: it's important to handle errors here instead of a catch() block so that we don't swallow exceptions from actual bugs in components.
       (error) => {
@@ -98,6 +99,7 @@ const Post = (props) => {
   function logout() {
     globalData.username = null;
     setUsername(null);
+    console.log("LOGOUT");
   }
 
   // Trigger the HttpRequest to load the post
@@ -146,9 +148,11 @@ const Post = (props) => {
           <div class='container'>
             <h2>{post.title}</h2>
             <img src={post.imagelink} style={styleImg}/>
-            <div style={styleAuthor}>
-                posted by <Link to={'/userpost/:' + post.author}><a>{post.author}</a></Link>
-            </div>
+            <Link className='Button' to={'/userpost/:' + post.author}>
+              <div style={styleAuthor}>
+                  posted by <a>{post.author}</a>
+              </div>
+            </Link>
             <div style={styleDeleteBtn}>{deleteButton}</div>
           </div>
           
