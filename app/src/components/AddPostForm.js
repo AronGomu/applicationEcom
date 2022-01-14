@@ -17,7 +17,7 @@ const AddPostForm = ({username, addPost}) => {
 	}
 
   return (
-    <div className="AddPostForm" style={{paddingLeft: '3%', paddingRight: '3%', borderBottomStyle: 'solid', borderWidth: '1px', borderColor: 'black'}}>
+    <div className="AddPostForm" style={{paddingLeft: '3%', paddingRight: '3%'}}>
       <div className="col s12">
         <div className="row">
           <div className="input-field col s12">

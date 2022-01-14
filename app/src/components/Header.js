@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-
+import { Link } from 'react-router-dom'
 // Custom Classes Import
 import Button from './Button'
 
@@ -9,13 +9,16 @@ const Header = ({ username, title, materializeIconCode, colorNavbar, loginColorB
     <div className='header'>
       <nav style={{ backgroundColor: colorNavbar }}>
         <div className="nav-wrapper" style={{ paddingLeft: 20, paddingBottom: 20, paddingRight: 20}}>
-          <div className="brand-logo">
-          <i className="large material-icons">{materializeIconCode}</i>
-            {title}
-          </div>
+            <Link to={'/'}>
+              <div className="brand-logo">
+                <i className="large material-icons">{materializeIconCode}</i> {title}
+              </div>
+            </Link>
           <ul id="nav-mobile" className="right">
             <li style={{paddingRight: 10}}>
-              <h5>{username}</h5>
+              <Link to={`/userpost/:${username}`}>
+                <h5>{username}</h5>
+              </Link>            
             </li>
             <li> 
               <ConnexionButton username={username} loginColorButton={loginColorButton} logoutColorButton={logoutColorButton} loginClickFunction={loginClickFunction} logoutClickFunction={logoutClickFunction} />
